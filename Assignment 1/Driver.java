@@ -376,11 +376,10 @@ public class Driver extends JFrame {
 				 timer = new Timer(1000, new ActionListener() {
 			            @Override
 			            public void actionPerformed(ActionEvent e) {
-			                pointer++; /* Automatically makes slideshow go right */
-			                
 			                /* If we haven't reached the far right */
 							if(pointer != filteredImages.length-1)
 							{
+								pointer++;
 								imageIcon = new ImageIcon(filteredImages[pointer]);
 								comboBox.setSelectedItem(filteredImages[pointer]);
 								image = imageIcon.getImage().getScaledInstance(contentPane.getWidth(), contentPane.getHeight(), Image.SCALE_FAST);
