@@ -60,6 +60,7 @@ public class Driver extends JFrame {
 				try {
 					Driver frame = new Driver();
 					frame.setVisible(true);
+					frame.setTitle("Emily's Awesome Image Viewer");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
