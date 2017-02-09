@@ -47,6 +47,7 @@ public class Driver extends JFrame {
 	private int pointer; /* Used to index filteredImages */
 	private ImageIcon imageIcon;
 	private Image image;
+	private boolean slideShowOn = false;
 	private Timer timer; /* Timer for slideshow */
 	@SuppressWarnings("rawtypes")
 	private JComboBox comboBox;
@@ -366,7 +367,6 @@ public class Driver extends JFrame {
 		/* Keybindings for right button */
 		right.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), "Right Arrow");
 		right.getActionMap().put("Right Arrow", aaright);
-		
 		right.addActionListener(aaright);
 		
 		/* Slideshow toggle */
@@ -374,44 +374,53 @@ public class Driver extends JFrame {
 		btnSlideshow.setToolTipText("Click to toggle slideshow on/off.");
 		btnSlideshow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				 timer = new Timer(1000, new ActionListener() {
-			            @Override
-			            public void actionPerformed(ActionEvent e) {
-			                /* If we haven't reached the far right */
-							if(pointer != filteredImages.length-1)
-							{
-								pointer++;
-								imageIcon = new ImageIcon(filteredImages[pointer]);
-								comboBox.setSelectedItem(filteredImages[pointer]);
-								image = imageIcon.getImage().getScaledInstance(contentPane.getWidth(), contentPane.getHeight(), Image.SCALE_FAST);
-								imageIcon = new ImageIcon(image);
-								imageLabel.setIcon(imageIcon);
-								imageLabel.addComponentListener(new ComponentAdapter() { 
-									public void componentResized(ComponentEvent e) 
-									{ 
-										imageLabel.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(imageLabel.getWidth(), imageLabel.getHeight(), Image.SCALE_FAST)));
-									} 
-								}); 
-							}
-							/* If we have reached the far right */
-							else if(pointer == filteredImages.length-1)
-							{
-								pointer = 0; 
-								imageIcon = new ImageIcon(filteredImages[pointer]);
-								comboBox.setSelectedItem(filteredImages[pointer]);
-								image = imageIcon.getImage().getScaledInstance(contentPane.getWidth(), contentPane.getHeight(), Image.SCALE_FAST);
-								imageIcon = new ImageIcon(image);
-								imageLabel.setIcon(imageIcon);
-								imageLabel.addComponentListener(new ComponentAdapter() { 
-									public void componentResized(ComponentEvent e) 
-									{ 
-										imageLabel.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(contentPane.getWidth(), contentPane.getHeight(), Image.SCALE_FAST)));
-									} 
-								});  
-							}
-			            }
-			        });
-			        timer.start();
+				if(slideShowOn == false)
+				{
+					 timer = new Timer(1000, new ActionListener() {
+				            @Override
+				            public void actionPerformed(ActionEvent e) {
+				                /* If we haven't reached the far right */
+								if(pointer != filteredImages.length-1)
+								{
+									pointer++;
+									imageIcon = new ImageIcon(filteredImages[pointer]);
+									comboBox.setSelectedItem(filteredImages[pointer]);
+									image = imageIcon.getImage().getScaledInstance(contentPane.getWidth(), contentPane.getHeight(), Image.SCALE_FAST);
+									imageIcon = new ImageIcon(image);
+									imageLabel.setIcon(imageIcon);
+									imageLabel.addComponentListener(new ComponentAdapter() { 
+										public void componentResized(ComponentEvent e) 
+										{ 
+											imageLabel.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(imageLabel.getWidth(), imageLabel.getHeight(), Image.SCALE_FAST)));
+										} 
+									}); 
+								}
+								/* If we have reached the far right */
+								else if(pointer == filteredImages.length-1)
+								{
+									pointer = 0; 
+									imageIcon = new ImageIcon(filteredImages[pointer]);
+									comboBox.setSelectedItem(filteredImages[pointer]);
+									image = imageIcon.getImage().getScaledInstance(contentPane.getWidth(), contentPane.getHeight(), Image.SCALE_FAST);
+									imageIcon = new ImageIcon(image);
+									imageLabel.setIcon(imageIcon);
+									imageLabel.addComponentListener(new ComponentAdapter() { 
+										public void componentResized(ComponentEvent e) 
+										{ 
+											imageLabel.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(contentPane.getWidth(), contentPane.getHeight(), Image.SCALE_FAST)));
+										} 
+									});  
+								}
+				            }
+				        });
+				        timer.start();
+				        slideShowOn = true;
+				}
+				else if(slideShowOn == true)
+				{
+					timer.stop();
+					slideShowOn = false;
+				}
 			}
 		});
 		panel.add(btnSlideshow); 
