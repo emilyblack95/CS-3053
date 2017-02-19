@@ -17,7 +17,7 @@ import Model.Model;
 /** 
  * Controller for Assignment 2 - HCI
  * 2/15/17
- * @author Emily
+ * @author Emily Black
  * Navigation Ways:
  * 1) Buttons
  * 2) ComboBox
