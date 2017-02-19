@@ -30,7 +30,7 @@ import java.awt.event.MouseEvent;
 /** 
  * Driver for Assignment 1 - HCI
  * 2/7/17
- * @author Emily
+ * @author Emily Black
  * Navigation Ways:
  * 1) Buttons
  * 2) ComboBox
